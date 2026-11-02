@@ -15,9 +15,6 @@ Two observation modes:
 * ``"grid"`` (for neural nets): float32 array of shape (8, H, W) with layers
   walls, pellets, power pellets, agent, one per ghost, and frightened ghosts
   (valued by the fraction of frightened time left).
-
-Gymnasium looks up `action_space`, `observation_space`, `render_mode` and
-`np_random` by name, so those stay snake_case.
 """
 
 import time
