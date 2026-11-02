@@ -1,18 +1,24 @@
+run:
+    mode: watch                     # "train" (train, save, evaluate), "eval" or "watch" the saved agent
+    watchEpisodes: 1                # episodes to play when mode is "watch"
+    renderFps: 4                    # watch speed in steps per second (lower = slower)
+    stepByStep: false               # true = press Enter to advance each step while watching
+
 env:
     id: MazeChase-v0
     kwargs:
         obsMode: features               # "features" (tabular) or "grid" (neural nets)
-        maxSteps: 500                   # episode is truncated after this many steps
+        maxSteps: 1000                   # episode is truncated after this many steps
         frightenedSteps: 20             # steps ghosts stay frightened after a power pellet
         respawnWait: 10                 # steps an eaten ghost waits at home
         releaseDelays: [0, 5, 10]       # steps before each ghost starts moving
-        dangerRadius: 3                 # path distance at which a ghost counts as danger
+        dangerRadius: 5                 # path distance at which a ghost counts as danger
         rewards:
             step: -0.01
-            pellet: 1.0
-            powerPellet: 5.0
-            eatGhost: 20.0
-            death: -50.0
+            pellet: 10.0
+            powerPellet: 20.0
+            eatGhost: 50.0
+            death: -100.0
             clear: 100.0
 
 agent:
@@ -21,12 +27,12 @@ agent:
         alpha: 0.1             # learning rate
         gamma: 0.95            # discount factor
         epsilon: 1.0           # initial exploration probability
-        epsilonMin: 0.05
+        epsilonMin: 0.01
         epsilonDecay: 0.9997   # multiplied in once per episode
         initialQ: 0.0          # > 0 = optimistic initial values
 
 training:
-    episodes: 30000
+    episodes: 50000
     seed: 0
     logEvery: 500 # print averages over this many episodes
     evalEpisodes: 300 # greedy episodes run after training

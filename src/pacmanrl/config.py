@@ -19,6 +19,23 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = PROJECT_ROOT / "config.yaml"
 
 
+RUN_MODES = ("train", "eval", "watch")
+
+
+@dataclass(frozen=True)
+class RunConfig:
+    mode: str = "train"
+    watchEpisodes: int = 1
+    renderFps: float = 4
+    stepByStep: bool = False
+
+    def __post_init__(self):
+        if self.mode not in RUN_MODES:
+            raise ValueError(f"run.mode must be one of {RUN_MODES}, got {self.mode!r}")
+        if self.renderFps <= 0:
+            raise ValueError(f"run.renderFps must be positive, got {self.renderFps}")
+
+
 @dataclass(frozen=True)
 class EnvConfig:
     id: str
@@ -51,6 +68,7 @@ class Config:
     env: EnvConfig
     agent: AgentConfig
     training: TrainingConfig = field(default_factory=TrainingConfig)
+    run: RunConfig = field(default_factory=RunConfig)
 
     @classmethod
     def load(cls, path: str | Path = DEFAULT_CONFIG_PATH) -> "Config":
@@ -68,6 +86,7 @@ class Config:
             env=build(EnvConfig, raw["env"], "env"),
             agent=build(AgentConfig, raw["agent"], "agent"),
             training=build(TrainingConfig, raw.get("training") or {}, "training"),
+            run=build(RunConfig, raw.get("run") or {}, "run"),
         )
 
 
