@@ -20,6 +20,7 @@ Gymnasium looks up `action_space`, `observation_space`, `render_mode` and
 `np_random` by name, so those stay snake_case.
 """
 
+import time
 from dataclasses import asdict, dataclass
 from typing import Any
 
@@ -112,6 +113,8 @@ class MazeChaseEnv(gym.Env):
         self.frightenedLeft = 0
         self.steps = 0
         self.score = 0.0
+        if self.render_mode == "human":
+            self.render()
         return self.obs(), asdict(self.info())
 
     def step(self, action):
@@ -170,7 +173,9 @@ class MazeChaseEnv(gym.Env):
             return None
         text = self.renderText()
         if self.render_mode == "human":
-            print(text, end="\n\n")
+            # Cursor to top-left + clear screen, so each frame replaces the last.
+            print("\033[H\033[2J" + text, flush=True)
+            time.sleep(1 / self.metadata["render_fps"])
             return None
         return text
 
