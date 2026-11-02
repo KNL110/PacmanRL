@@ -55,7 +55,8 @@ NONE_DIR = 4
 
 
 class MazeChaseEnv(gym.Env):
-    metadata = {"render_modes": ["ansi", "human"], "render_fps": 8}
+    metadata = {"render_modes": ["ansi", "human"], "render_fps": 4}
+    actionNames = ("up", "down", "left", "right")
 
     def __init__(
         self,
