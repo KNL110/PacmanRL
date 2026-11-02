@@ -1,6 +1,6 @@
 # PACMAN RL Agent
 
-An RL agent for a Pacman maze game.(currently it has only QLEarning implemented)
+An RL agent for a Pacman maze game.currently it has only QLearning(Tabular) implemented
 
 ## Usage
 
