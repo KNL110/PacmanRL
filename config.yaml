@@ -1,0 +1,33 @@
+env:
+    id: MazeChase-v0
+    kwargs:
+        obsMode: features               # "features" (tabular) or "grid" (neural nets)
+        maxSteps: 500                   # episode is truncated after this many steps
+        frightenedSteps: 20             # steps ghosts stay frightened after a power pellet
+        respawnWait: 10                 # steps an eaten ghost waits at home
+        releaseDelays: [0, 5, 10]       # steps before each ghost starts moving
+        dangerRadius: 3                 # path distance at which a ghost counts as danger
+        rewards:
+            step: -0.01
+            pellet: 1.0
+            powerPellet: 5.0
+            eatGhost: 20.0
+            death: -50.0
+            clear: 100.0
+
+agent:
+    name: QLearning
+    params:
+        alpha: 0.1             # learning rate
+        gamma: 0.95            # discount factor
+        epsilon: 1.0           # initial exploration probability
+        epsilonMin: 0.05
+        epsilonDecay: 0.9997   # multiplied in once per episode
+        initialQ: 0.0          # > 0 = optimistic initial values
+
+training:
+    episodes: 30000
+    seed: 0
+    logEvery: 500 # print averages over this many episodes
+    evalEpisodes: 300 # greedy episodes run after training
+    savePath: checkpoints/qlearning.pkl
