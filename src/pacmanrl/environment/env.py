@@ -66,7 +66,7 @@ class MazeChaseEnv(gym.Env):
         obsMode: str = "features",
         render_mode: str | None = None,
         maxSteps: int = 500,
-        rewards: Rewards = Rewards(),
+        rewards: Rewards | dict[str, float] = Rewards(),
         frightenedSteps: int = 20,
         respawnWait: int = 10,
         releaseDelays: tuple[int, ...] = (0, 5, 10),
@@ -82,7 +82,8 @@ class MazeChaseEnv(gym.Env):
         self.obsMode = obsMode
         self.render_mode = render_mode
         self.maxSteps = maxSteps
-        self.rewards = rewards
+        # A dict (e.g. from config.yaml) overrides only the fields it names.
+        self.rewards = Rewards(**rewards) if isinstance(rewards, dict) else rewards
         self.frightenedSteps = frightenedSteps
         self.respawnWait = respawnWait
         self.dangerRadius = dangerRadius
