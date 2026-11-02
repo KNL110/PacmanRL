@@ -91,8 +91,8 @@ class Drifter(Ghost):
 
     name, symbol = "drifter", "D"
 
-    def __init__(self, home: Pos, release_delay: int = 0, radius: int = 5):
-        super().__init__(home, release_delay)
+    def __init__(self, home: Pos, releaseDelay: int = 0, radius: int = 5):
+        super().__init__(home, releaseDelay)
         self.radius = radius
 
     def target(self, grid, agent, powerPellets, rng):
