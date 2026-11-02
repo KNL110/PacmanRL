@@ -74,6 +74,7 @@ class Grid:
         return self.step(pos, action) or pos
 
     def neighbors(self, pos: Pos) -> list[tuple[int, Pos]]:
+        """List of (action, cell) pairs reachable from `pos`."""
         return [
             (a, self.cells[j]) for a, j in enumerate(self.next[self.index[pos]]) if j >= 0
         ]
